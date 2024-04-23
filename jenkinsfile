@@ -1,28 +1,28 @@
 pipeline {
-    agent any
-    
-    environment {
-        GITHUB_REPO_URL = 'https://github.com/morawaliyadda/farmfresh-server'
+  agent any
+  triggers{
+    githubPush()
+  }
+  stages {
+    stage('Docker Build'){
+      steps {
+        sh 'docker build -t onlinestore .'
+      }
     }
-    
-    stages {
-        stage('Checkout') {
+    stage('Docker Run'){
+      steps{
+        sh 'docker run -d -p 5000:3000 onlinestore'
+      }
+    }
+    stage('Final'){
+      steps{
+        sh 'docker ps'
+      }
+    }
+    stage('Deploy') {
             steps {
-                git branch: 'master', url: "${env.GITHUB_REPO_URL}"
+                echo 'Deploying application...'
             }
         }
-        
-        stage('Build Docker Image') {
-            steps {
-                bat 'docker build -t onlinestore .'
-            }
-        }
-        
-        stage('Run Docker Image') {
-            steps {
-                bat 'docker run -p 3001:3001 onlinestore'
-            }
-        }
-        
     }
 }
