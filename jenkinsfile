@@ -6,23 +6,17 @@ pipeline {
   stages {
     stage('Docker Build'){
       steps {
-        bat 'docker build -t onlinestore .'
+        bat 'docker build -t morawaliyadda/farmfresh-server .'
       }
     }
     stage('Docker Run'){
       steps{
-        bat 'docker run -d -p 3001:3001 onlinestore'
+        bat 'docker run -d -p 3001:3001 morawaliyadda/farmfresh-server'
       }
     }
     stage('Final'){
       steps{
         bat 'docker ps'
       }
-    }
-    stage('Deploy') {
-            steps {
-                echo 'Deploying application...'
-            }
-        }
-    }
+    }}
 }
