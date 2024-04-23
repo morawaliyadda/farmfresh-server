@@ -6,17 +6,17 @@ pipeline {
   stages {
     stage('Docker Build'){
       steps {
-        sh 'docker build -t onlinestore .'
+        bat 'docker build -t onlinestore .'
       }
     }
     stage('Docker Run'){
       steps{
-        sh 'docker run -d -p 5000:3000 onlinestore'
+        bat 'docker run -d -p 5000:3000 onlinestore'
       }
     }
     stage('Final'){
       steps{
-        sh 'docker ps'
+        bat 'docker ps'
       }
     }
     stage('Deploy') {
